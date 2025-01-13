@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reconocimiento de Gestos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #000000;
+            color: #ffdd00;
+            animation: fadeIn 1s ease-in-out;
+            overflow-x: hidden;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .btn-custom {
+            background-color: #ffdd00;
+            color: #000;
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: none;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .btn-custom:hover {
+            background-color: #ffd700;
+            transform: scale(1.05);
+        }
+
+        .progress-container {
+            width: 100%;
+            background-color: #1a1a1a;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 8px;
+            background-color: #ffdd00;
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+
+        .card {
+            background-color: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(255, 255, 0, 0.1);
+        }
+
+        .title-divider {
+            height: 2px;
+            background: linear-gradient(to right, #ffdd00, transparent);
+            margin: 10px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mx-auto px-4 py-8">
+        <div class="text-center">
+            <h1 class="text-5xl font-extrabold tracking-tight">Reconocimiento de gestos</h1>
+            <div class="title-divider"></div>
+        </div>
+
+        <div class="max-w-4xl mx-auto mt-12">
+            <div class="flex flex-wrap -mx-4">
+                <div class="w-full md:w-1/2 px-4 mb-8">
+                    <div class="card">
+                        <h2 class="text-2xl font-semibold mb-6">Cargar Imagen </h2>
+                        <form id="uploadForm" class="space-y-6">
+                            <div class="flex items-center justify-center w-full">
+                                <label class="flex flex-col items-center justify-center w-full h-48 border-4 border-dashed border-gray-600 cursor-pointer">
+                                    <div class="text-center" id="previewContainer">
+                                        <p>Arrastra o selecciona una imagen</p>
+                                    </div>
+                                    <input type="file" class="opacity-0 absolute" name="file" accept=".jpg,.jpeg,.png" id="fileInput" />
+                                </label>
+                            </div>
+                            <button type="submit" class="btn-custom w-full">
+                                Cargar
+                            </button>
+                        </form>
+                        <div id="uploadMessage" class="text-green-500 mt-4 hidden">
+                            Imagen subida
+                        </div>
+                        <div id="progressSection" class="hidden mt-6">
+                            <div class="progress-container">
+                                <div id="progress" class="progress"></div>
+                            </div>
+                        </div>
+                        <div id="loading" class="hidden mt-6">
+                            <div class="flex items-center justify-center">
+                                <div class="loading-spinner h-14 w-14"></div>
+                            </div>
+                        </div>
+                        <div id="error" class="hidden mt-6 p-4 bg-red-800 border border-red-600 text-red-200 rounded-lg">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w-full md:w-1/2 px-4">
+                    <div class="card">
+                        <h2 class="text-2xl font-semibold mb-6">Resultado</h2>
+                        <div id="detectionComplete" class="hidden text-green-500 font-bold">
+                            Completado
+                        </div>
+                        <div id="results" class="hidden">
+                            <div class="border border-gray-600 rounded-lg p-6">
+                                <h4 class="font-semibold mb-4">Resultados:</h4>
+                                <div class="relative">
+                                    <img id="keypointImage" class="max-w-full h-auto mx-auto" src="" alt="Puntos clave del rostro">
+                                    <img id="resultImageSecondary" class="max-w-full h-auto mx-auto mt-4" src="" alt="Transformaciones de la Imagen">
+                                </div>
+                            </div>
+                            <div id="emotionLabel" class="text-lg font-bold text-center mt-4 hidden"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
